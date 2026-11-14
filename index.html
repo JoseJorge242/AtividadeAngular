@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR" ng-app="app">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Atividade AngularJS</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body ng-controller="MainController as vm">
+
+  <header class="header">
+    <h1>Atividade AngularJS</h1>
+    <app-dropdown label="Idioma: {{ vm.language }}" options="vm.options" on-select="vm.onSelect(option)"></app-dropdown>
+  </header>
+
+  <main class="container">
+
+    <section class="card">
+      <h2>Barra de Progresso</h2>
+      <app-progress-bar value="vm.progress"></app-progress-bar>
+      <input type="range" min="0" max="100" ng-model="vm.progress" ng-change="vm.onProgressChange()">
+    </section>
+
+    <section class="card">
+      <h2>Abas</h2>
+      <app-tabs tabs="vm.tabs"></app-tabs>
+    </section>
+
+    <section class="card">
+      <h2>Acordeão</h2>
+      <app-accordion items="vm.faq"></app-accordion>
+    </section>
+
+    <section class="card">
+      <h2>Paginação</h2>
+      <ul class="product-list">
+        <li ng-repeat="p in vm.products | limitTo:vm.pageSize:(vm.page - 1) * vm.pageSize">
+          <strong>{{ p.name }}</strong> - {{ p.price | currency:'R$ ' }}<br>
+          <small>{{ p.description | truncate:40 }}</small>
+        </li>
+      </ul>
+      <app-pagination total-pages="vm.totalPages" current="vm.page" on-change="vm.goTo(page)"></app-pagination>
+    </section>
+
+    <section class="card">
+      <h2>Toast</h2>
+      <button class="btn btn--success" ng-click="vm.notify('success', 'Operação realizada com sucesso.')">Sucesso</button>
+      <button class="btn btn--error" ng-click="vm.notify('error', 'Erro ao salvar. Tente novamente.')">Erro</button>
+      <button class="btn btn--info" ng-click="vm.notify('info', 'Você tem novas atualizações.')">Informação</button>
+    </section>
+
+  </main>
+
+  <app-toast></app-toast>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.3/angular.min.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/filters.js"></script>
+  <script src="js/controller.js"></script>
+  <script src="js/directives/accordion.js"></script>
+  <script src="js/directives/pagination.js"></script>
+  <script src="js/directives/progress-bar.js"></script>
+  <script src="js/directives/tabs.js"></script>
+  <script src="js/directives/dropdown.js"></script>
+  <script src="js/directives/toast.js"></script>
+</body>
+</html>
